@@ -13,39 +13,122 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #faf0e6; /* Beige cálido */
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative;
+        }
+
+        /* Imagen en la esquina superior izquierda */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/2922/2922561.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+            z-index: 1000;
         }
 
         .container {
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
-            padding: 30px;
+            padding: 40px 30px;
             text-align: center;
         }
 
         h1 {
-            color: #333;
-            margin-bottom: 10px;
+            color: #8B5A2B;
+            margin-bottom: 15px;
+            font-size: 28px;
         }
 
         .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+            color: #B8860B;
+            margin-bottom: 25px;
+            font-size: 16px;
+            font-weight: 500;
         }
 
+        /* Estilos para la pantalla de instrucciones */
+        .instrucciones {
+            text-align: left;
+            margin: 25px 0;
+            padding: 20px;
+            background: #FFF8F0;
+            border-radius: 15px;
+            border-left: 4px solid #D2A679;
+        }
+
+        .instrucciones h3 {
+            color: #8B5A2B;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .instrucciones p {
+            color: #555;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .instrucciones ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .instrucciones li {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .medidas {
+            background: #E8D5B7;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .medidas p {
+            margin: 5px 0;
+            font-weight: 500;
+        }
+
+        .btn-empezar {
+            background: #D2A679;
+            color: white;
+            padding: 14px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn-empezar:hover {
+            background: #B8860B;
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para el test */
         .pregunta {
             font-size: 20px;
             font-weight: 600;
-            color: #333;
+            color: #8B5A2B;
             margin-bottom: 30px;
             line-height: 1.4;
         }
@@ -87,7 +170,7 @@
         }
 
         .resultado {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #D2A679 0%, #B8860B 100%);
             color: white;
             padding: 30px;
             border-radius: 15px;
@@ -123,23 +206,52 @@
 </head>
 <body>
     <div class="container" id="app">
-        <h1>🎨 Test de Colorimetría</h1>
-        <div class="subtitle">Descubre la forma de tu rostro</div>
+        <!-- PANTALLA DE INSTRUCCIONES (visible al inicio) -->
+        <div id="pantallaInicio">
+            <h1>🎨 TEST DE COLORIMETRÍA</h1>
+            <div class="subtitle">Descubre la forma de tu rostro</div>
+            
+            <div class="instrucciones">
+                <h3>📏 Antes de comenzar, tómate las medidas</h3>
+                <p>Para obtener un resultado preciso, necesitarás una <strong>cinta métrica flexible</strong> (de las que usan los sastres). Toma las siguientes medidas:</p>
+                
+                <ul>
+                    <li><strong>📐 Largo del rostro:</strong> Mide desde la <strong>nacimiento del cabello en la frente</strong> (justo donde empieza tu pelo) hasta la <strong>parte más baja del mentón</strong>.</li>
+                    <li><strong>📏 Ancho del rostro:</strong> Mide la distancia entre tus <strong>sienes</strong> (la parte más ancha de tus pómulos, de izquierda a derecha).</li>
+                    <li><strong>🔄 Compara ambas medidas:</strong> ¿Tu rostro es notablemente más largo que ancho? ¿O son similares?</li>
+                </ul>
 
-        <div id="preguntaContainer">
-            <div class="pregunta" id="preguntaTexto"></div>
-            <div class="botones">
-                <button class="btn btn-si" id="btnSi">✅ Sí</button>
-                <button class="btn btn-no" id="btnNo">❌ No</button>
+                <div class="medidas">
+                    <p>💡 <strong>Tip:</strong> Si no tienes cinta métrica, puedes usar un hilo o cordón y luego medirlo con una regla.</p>
+                    <p>✨ También observa la forma de tu mandíbula y frente frente a un espejo.</p>
+                </div>
+
+                <p style="text-align: center; font-style: italic; margin-top: 15px;">¡Tómate tu tiempo! Las respuestas sinceras dan mejores resultados.</p>
             </div>
+
+            <button class="btn-empezar" id="btnEmpezar">🔮 EMPEZAR TEST</button>
         </div>
 
-        <div id="resultadoContainer" class="oculto">
-            <div class="resultado">
-                <h2>✨ Tu tipo de rostro es ✨</h2>
-                <p id="resultadoTexto"></p>
-                <div class="descripcion" id="resultadoDescripcion"></div>
-                <button class="btn reiniciar" id="btnReiniciar">🔄 Volver a empezar</button>
+        <!-- PANTALLA DEL TEST (oculta al inicio) -->
+        <div id="pantallaTest" class="oculto">
+            <h1>🎨 TEST DE COLORIMETRÍA</h1>
+            <div class="subtitle">Responde con sinceridad</div>
+            
+            <div id="preguntaContainer">
+                <div class="pregunta" id="preguntaTexto"></div>
+                <div class="botones">
+                    <button class="btn btn-si" id="btnSi">✅ Sí</button>
+                    <button class="btn btn-no" id="btnNo">❌ No</button>
+                </div>
+            </div>
+
+            <div id="resultadoContainer" class="oculto">
+                <div class="resultado">
+                    <h2>✨ Tu tipo de rostro es ✨</h2>
+                    <p id="resultadoTexto"></p>
+                    <div class="descripcion" id="resultadoDescripcion"></div>
+                    <button class="btn reiniciar" id="btnReiniciar">🔄 Volver a empezar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -219,6 +331,8 @@
         let estadoActual = "p1";
 
         // Elementos del DOM
+        const pantallaInicio = document.getElementById("pantallaInicio");
+        const pantallaTest = document.getElementById("pantallaTest");
         const preguntaContainer = document.getElementById("preguntaContainer");
         const resultadoContainer = document.getElementById("resultadoContainer");
         const preguntaTexto = document.getElementById("preguntaTexto");
@@ -227,6 +341,14 @@
         const btnSi = document.getElementById("btnSi");
         const btnNo = document.getElementById("btnNo");
         const btnReiniciar = document.getElementById("btnReiniciar");
+        const btnEmpezar = document.getElementById("btnEmpezar");
+
+        // Función para mostrar el test (ocultar instrucciones)
+        function empezarTest() {
+            pantallaInicio.classList.add("oculto");
+            pantallaTest.classList.remove("oculto");
+            reiniciarTest();
+        }
 
         function mostrarPregunta(clave) {
             const nodo = arbol[clave];
@@ -263,13 +385,21 @@
             mostrarPregunta("p1");
         }
 
+        function volverAlInicio() {
+            pantallaTest.classList.add("oculto");
+            pantallaInicio.classList.remove("oculto");
+        }
+
         // Event listeners
+        btnEmpezar.addEventListener("click", empezarTest);
         btnSi.addEventListener("click", () => procesarRespuesta("si"));
         btnNo.addEventListener("click", () => procesarRespuesta("no"));
-        btnReiniciar.addEventListener("click", reiniciarTest);
+        btnReiniciar.addEventListener("click", () => {
+            reiniciarTest();
+        });
 
-        // Iniciar el test
-        mostrarPregunta("p1");
+        // Inicializar (todo oculto menos instrucciones)
+        // No llamamos a mostrarPregunta hasta que se haga clic en "Empezar"
     </script>
 </body>
 </html>
