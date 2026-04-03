@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test de Colorimetría - Tipo de Rostro</title>
+    <title>Test de Tipo de Rostro</title>
     <style>
         * {
             margin: 0;
@@ -193,14 +193,34 @@
             opacity: 0.9;
         }
 
-        .reiniciar {
+        .btn-reiniciar {
             margin-top: 20px;
             background: #ffc107;
             color: #333;
         }
 
+        .btn-whatsapp {
+            margin-top: 15px;
+            background: #25D366;
+            color: white;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
         .oculto {
             display: none;
+        }
+
+        .botones-finales {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -208,7 +228,7 @@
     <div class="container" id="app">
         <!-- PANTALLA DE INSTRUCCIONES (visible al inicio) -->
         <div id="pantallaInicio">
-            <h1>🎨 TEST DE COLORIMETRÍA</h1>
+            <h1>TEST DE TIPO DE ROSTRO</h1>
             <div class="subtitle">Descubre la forma de tu rostro</div>
             
             <div class="instrucciones">
@@ -229,19 +249,19 @@
                 <p style="text-align: center; font-style: italic; margin-top: 15px;">¡Tómate tu tiempo! Las respuestas sinceras dan mejores resultados.</p>
             </div>
 
-            <button class="btn-empezar" id="btnEmpezar">🔮 EMPEZAR TEST</button>
+            <button class="btn-empezar" id="btnEmpezar">EMPEZAR TEST</button>
         </div>
 
         <!-- PANTALLA DEL TEST (oculta al inicio) -->
         <div id="pantallaTest" class="oculto">
-            <h1>🎨 TEST DE COLORIMETRÍA</h1>
+            <h1>TEST DE TIPO DE ROSTRO</h1>
             <div class="subtitle">Responde con sinceridad</div>
             
             <div id="preguntaContainer">
                 <div class="pregunta" id="preguntaTexto"></div>
                 <div class="botones">
-                    <button class="btn btn-si" id="btnSi">✅ Sí</button>
-                    <button class="btn btn-no" id="btnNo">❌ No</button>
+                    <button class="btn btn-si" id="btnSi">Sí</button>
+                    <button class="btn btn-no" id="btnNo">No</button>
                 </div>
             </div>
 
@@ -250,7 +270,16 @@
                     <h2>✨ Tu tipo de rostro es ✨</h2>
                     <p id="resultadoTexto"></p>
                     <div class="descripcion" id="resultadoDescripcion"></div>
-                    <button class="btn reiniciar" id="btnReiniciar">🔄 Volver a empezar</button>
+                    
+                    <div class="botones-finales">
+                        <button class="btn btn-reiniciar" id="btnReiniciar">Volver a empezar</button>
+                        <a href="https://wa.me/59169696211?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20mi%20tipo%20de%20rostro%20y%20asesor%C3%ADa%20personalizada" 
+                           target="_blank" 
+                           class="btn btn-whatsapp" 
+                           id="btnWhatsapp">
+                            ¿Quieres algo más personalizado? 💬
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -385,11 +414,6 @@
             mostrarPregunta("p1");
         }
 
-        function volverAlInicio() {
-            pantallaTest.classList.add("oculto");
-            pantallaInicio.classList.remove("oculto");
-        }
-
         // Event listeners
         btnEmpezar.addEventListener("click", empezarTest);
         btnSi.addEventListener("click", () => procesarRespuesta("si"));
@@ -397,9 +421,6 @@
         btnReiniciar.addEventListener("click", () => {
             reiniciarTest();
         });
-
-        // Inicializar (todo oculto menos instrucciones)
-        // No llamamos a mostrarPregunta hasta que se haga clic en "Empezar"
     </script>
 </body>
 </html>
