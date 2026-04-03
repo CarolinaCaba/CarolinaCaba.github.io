@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f7f3ea; /* Tu color de fondo */
+            background: #f7f3ea;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -48,7 +48,7 @@
         }
 
         h1 {
-            color: #800020; /* Tu color borgoña */
+            color: #800020;
             margin-bottom: 15px;
             font-size: 28px;
         }
@@ -66,7 +66,7 @@
             text-align: left;
             margin: 25px 0;
             padding: 20px;
-            background: #e3d9cb; /* Tu color secundario */
+            background: #e3d9cb;
             border-radius: 15px;
             border-left: 4px solid #800020;
         }
@@ -194,6 +194,46 @@
             font-size: 16px;
             font-weight: normal;
             opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para las imágenes de los rostros */
+        .imagen-rostro {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .imagen-rostro img {
+            max-width: 150px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Para cuando hay dos imágenes (corazón + triángulo invertido) */
+        .imagenes-dobles {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .imagenes-dobles .img-item {
+            text-align: center;
+        }
+
+        .imagenes-dobles img {
+            max-width: 120px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .imagenes-dobles .img-label {
+            font-size: 12px;
+            margin-top: 8px;
+            opacity: 0.9;
         }
 
         .btn-reiniciar {
@@ -271,6 +311,7 @@
             <div id="resultadoContainer" class="oculto">
                 <div class="resultado">
                     <h2>✨ Tu tipo de rostro es ✨</h2>
+                    <div id="imagenRostro"></div>
                     <p id="resultadoTexto"></p>
                     <div class="descripcion" id="resultadoDescripcion"></div>
                     
@@ -280,7 +321,7 @@
                            target="_blank" 
                            class="btn btn-whatsapp" 
                            id="btnWhatsapp">
-                            ¿Quieres algo más personalizado? 💬
+                            ¿Quieres una asesoría personalizada?
                         </a>
                     </div>
                 </div>
@@ -332,31 +373,46 @@
         const descripciones = {
             rectangulo: {
                 nombre: "RECTÁNGULO",
-                descripcion: "Tu rostro es alargado con líneas angulosas. Los looks estructurados te favorecen mucho."
+                descripcion: "Tu rostro es alargado con líneas angulosas. Los looks estructurados te favorecen mucho.",
+                imagen: "rectangulo.jpg",
+                dobleImagen: false
             },
             ovalado: {
                 nombre: "OVALADO",
-                descripcion: "Tu rostro es equilibrado y versátil. ¡Casi cualquier estilo te queda bien!"
+                descripcion: "Tu rostro es equilibrado y versátil. ¡Casi cualquier estilo te queda bien!",
+                imagen: "ovalado.jpg",
+                dobleImagen: false
             },
             redondo: {
                 nombre: "REDONDO",
-                descripcion: "Tu rostro tiene líneas suaves y curvas. Los looks que alargan visualmente te favorecen."
+                descripcion: "Tu rostro tiene líneas suaves y curvas. Los looks que alargan visualmente te favorecen.",
+                imagen: "redondo.jpg",
+                dobleImagen: false
             },
             cuadrado: {
                 nombre: "CUADRADO",
-                descripcion: "Tu rostro tiene una mandíbula marcada y angular. Los looks que suavizan las líneas te van genial."
+                descripcion: "Tu rostro tiene una mandíbula marcada y angular. Los looks que suavizan las líneas te van genial.",
+                imagen: "cuadrado.jpg",
+                dobleImagen: false
             },
             triangulo: {
                 nombre: "TRIÁNGULO",
-                descripcion: "Tu mandíbula es más ancha que tu frente. Los looks que dan volumen en la parte superior te equilibran."
+                descripcion: "Tu mandíbula es más ancha que tu frente. Los looks que dan volumen en la parte superior te equilibran.",
+                imagen: "triangulo.jpg",
+                dobleImagen: false
             },
             corazon: {
                 nombre: "CORAZÓN o TRIÁNGULO INVERTIDO",
-                descripcion: "Tu frente es más ancha que tu mandíbula. Los looks que equilibran la parte inferior te favorecen."
+                descripcion: "Tu frente es más ancha que tu mandíbula. Los looks que equilibran la parte inferior te favorecen.",
+                imagen: "corazon.jpg",
+                imagen2: "trianguloinvertido.jpg",
+                dobleImagen: true
             },
             diamante: {
                 nombre: "DIAMANTE",
-                descripcion: "Tus pómulos son lo más ancho de tu rostro. Los looks que suavizan los pómulos te van espectacular."
+                descripcion: "Tus pómulos son lo más ancho de tu rostro. Los looks que suavizan los pómulos te van espectacular.",
+                imagen: "diamante.jpg",
+                dobleImagen: false
             }
         };
 
@@ -370,16 +426,39 @@
         const preguntaTexto = document.getElementById("preguntaTexto");
         const resultadoTexto = document.getElementById("resultadoTexto");
         const resultadoDescripcion = document.getElementById("resultadoDescripcion");
+        const imagenRostro = document.getElementById("imagenRostro");
         const btnSi = document.getElementById("btnSi");
         const btnNo = document.getElementById("btnNo");
         const btnReiniciar = document.getElementById("btnReiniciar");
         const btnEmpezar = document.getElementById("btnEmpezar");
 
-        // Función para mostrar el test (ocultar instrucciones)
-        function empezarTest() {
-            pantallaInicio.classList.add("oculto");
-            pantallaTest.classList.remove("oculto");
-            reiniciarTest();
+        // Función para mostrar la imagen según el tipo de rostro
+        function mostrarImagen(tipo) {
+            const data = descripciones[tipo];
+            if (!data) return "";
+            
+            if (data.dobleImagen) {
+                // Mostrar dos imágenes (corazón y triángulo invertido)
+                return `
+                    <div class="imagenes-dobles">
+                        <div class="img-item">
+                            <img src="assets/${data.imagen}" alt="${data.nombre}">
+                            <div class="img-label">Corazón</div>
+                        </div>
+                        <div class="img-item">
+                            <img src="assets/${data.imagen2}" alt="Triángulo Invertido">
+                            <div class="img-label">Triángulo Invertido</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Mostrar una sola imagen
+                return `
+                    <div class="imagen-rostro">
+                        <img src="assets/${data.imagen}" alt="${data.nombre}">
+                    </div>
+                `;
+            }
         }
 
         function mostrarPregunta(clave) {
@@ -396,9 +475,12 @@
                 if (resultado) {
                     resultadoTexto.textContent = resultado.nombre;
                     resultadoDescripcion.textContent = resultado.descripcion;
+                    // Mostrar la(s) imagen(es) correspondiente(s)
+                    imagenRostro.innerHTML = mostrarImagen(clave);
                 } else {
                     resultadoTexto.textContent = clave.toUpperCase();
                     resultadoDescripcion.textContent = "¡Descubriste la forma de tu rostro!";
+                    imagenRostro.innerHTML = "";
                 }
                 preguntaContainer.classList.add("oculto");
                 resultadoContainer.classList.remove("oculto");
@@ -417,13 +499,17 @@
             mostrarPregunta("p1");
         }
 
+        function empezarTest() {
+            pantallaInicio.classList.add("oculto");
+            pantallaTest.classList.remove("oculto");
+            reiniciarTest();
+        }
+
         // Event listeners
         btnEmpezar.addEventListener("click", empezarTest);
         btnSi.addEventListener("click", () => procesarRespuesta("si"));
         btnNo.addEventListener("click", () => procesarRespuesta("no"));
-        btnReiniciar.addEventListener("click", () => {
-            reiniciarTest();
-        });
+        btnReiniciar.addEventListener("click", reiniciarTest);
     </script>
 </body>
 </html>
