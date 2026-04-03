@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #faf0e6; /* Beige cálido */
+            background: #f7f3ea; /* Tu color de fondo */
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,18 +22,18 @@
             position: relative;
         }
 
-        /* Imagen en la esquina superior izquierda */
+        /* Tu LOGO en la esquina superior izquierda */
         body::before {
             content: "";
             position: fixed;
             top: 20px;
             left: 20px;
-            width: 60px;
-            height: 60px;
-            background-image: url('https://cdn-icons-png.flaticon.com/512/2922/2922561.png');
-            background-size: cover;
+            width: 70px;
+            height: 70px;
+            background-image: url('assets/logo.png');
+            background-size: contain;
             background-repeat: no-repeat;
-            border-radius: 50%;
+            background-position: center;
             z-index: 1000;
         }
 
@@ -48,16 +48,17 @@
         }
 
         h1 {
-            color: #8B5A2B;
+            color: #800020; /* Tu color borgoña */
             margin-bottom: 15px;
             font-size: 28px;
         }
 
         .subtitle {
-            color: #B8860B;
+            color: #800020;
             margin-bottom: 25px;
             font-size: 16px;
             font-weight: 500;
+            opacity: 0.8;
         }
 
         /* Estilos para la pantalla de instrucciones */
@@ -65,19 +66,19 @@
             text-align: left;
             margin: 25px 0;
             padding: 20px;
-            background: #FFF8F0;
+            background: #e3d9cb; /* Tu color secundario */
             border-radius: 15px;
-            border-left: 4px solid #D2A679;
+            border-left: 4px solid #800020;
         }
 
         .instrucciones h3 {
-            color: #8B5A2B;
+            color: #800020;
             margin-bottom: 15px;
             text-align: center;
         }
 
         .instrucciones p {
-            color: #555;
+            color: #4a4a4a;
             margin-bottom: 12px;
             line-height: 1.6;
         }
@@ -88,26 +89,28 @@
         }
 
         .instrucciones li {
-            color: #555;
+            color: #4a4a4a;
             margin-bottom: 10px;
             line-height: 1.5;
         }
 
         .medidas {
-            background: #E8D5B7;
+            background: #f7f3ea;
             padding: 15px;
             border-radius: 12px;
             margin: 15px 0;
             text-align: center;
+            border: 1px solid #e3d9cb;
         }
 
         .medidas p {
             margin: 5px 0;
             font-weight: 500;
+            color: #800020;
         }
 
         .btn-empezar {
-            background: #D2A679;
+            background: #800020;
             color: white;
             padding: 14px 40px;
             font-size: 18px;
@@ -120,7 +123,7 @@
         }
 
         .btn-empezar:hover {
-            background: #B8860B;
+            background: #5a0016;
             transform: translateY(-2px);
         }
 
@@ -128,7 +131,7 @@
         .pregunta {
             font-size: 20px;
             font-weight: 600;
-            color: #8B5A2B;
+            color: #800020;
             margin-bottom: 30px;
             line-height: 1.4;
         }
@@ -170,7 +173,7 @@
         }
 
         .resultado {
-            background: linear-gradient(135deg, #D2A679 0%, #B8860B 100%);
+            background: linear-gradient(135deg, #800020 0%, #5a0016 100%);
             color: white;
             padding: 30px;
             border-radius: 15px;
